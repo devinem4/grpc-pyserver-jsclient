@@ -5,13 +5,20 @@ services:
       context: ./common
       dockerfile: ./Dockerfile
     image: grpcmatt/common
-  node-server:
+#  node-server:
+#    build:
+#      context: ./server/node
+#      dockerfile: ./Dockerfile
+#    depends_on:
+#      - common
+#    image: grpcmatt/node-server
+#    ports:
+#      - "9090:9090"
+  python-server:
     build:
-      context: ./server/node
+      context: ./server/python
       dockerfile: ./Dockerfile
-    depends_on:
-      - common
-    image: grpcmatt/node-server
+    image: grpcmatt/python-server
     ports:
       - "9090:9090"
   envoy:
@@ -22,7 +29,9 @@ services:
     ports:
       - "8080:8080"
     links:
-      - node-server
+      # update this line with whichever server you are using
+      # also update final line on envoy.yaml to match (address: ____)
+      - python-server
   js-client:
     build:
       context: ./client/js

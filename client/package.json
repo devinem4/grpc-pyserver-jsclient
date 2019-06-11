@@ -1,7 +1,7 @@
 {
-    "name": "grpc-web-commonjs-example",
+    "name": "grpc-pyserver-jsclient",
     "version": "0.1.0",
-    "description": "gRPC-Web CommonJS client example",
+    "description": "gRPC-Web CommonJS client with python server",
     "license": "Apache-2.0",
     "dependencies": {
       "google-protobuf": "^3.6.1",

@@ -15,11 +15,22 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 class Echo(echo_pb2_grpc.EchoServiceServicer):
 
     def Echo(self, request, context):
-        print(f"received an echo response... { request.message }")
+        print(f"received an echo request (unary)... { request.message }")
         return echo_pb2.EchoResponse(
             message='Hello, %s!' % request.message,
             message_count=22
         )
+
+    def ServerStreamingEcho(self, request, context):
+        print(
+            f"received an echo request (streaming)... "
+            f"{ request.message } / { request.message_count } / "
+            f"{ request.message_interval }")
+        for i in range(0, request.message_count):
+            yield echo_pb2.ServerStreamingEchoResponse(
+                message='Streamin @ ya, %s!' % request.message
+            )
+            time.sleep(request.message_interval / 1000)
 
 
 def serve():
